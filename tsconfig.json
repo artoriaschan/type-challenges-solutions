@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "noUnusedLocals": false,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "noImplicitReturns": true
   },
   "exclude": ["node_modules", "dist"],
