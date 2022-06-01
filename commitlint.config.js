@@ -20,7 +20,6 @@ const Configuration = {
         'refactor',
         'test',
         'workflow',
-        'build',
         'ci',
         'chore',
         'types',
