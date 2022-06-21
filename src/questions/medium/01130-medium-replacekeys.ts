@@ -27,15 +27,11 @@
   // {type: 'A', name: never, flag: number} | NodeB | {type: 'C', name: never, flag: number} // would replace name to never
 */
 
-type ReplaceKeys<N, K, T> = 
-  N extends N 
-    ? {
-      [key in keyof N]:
-        key extends K
-          ? T[Extract<keyof T, key>]
-          : N[key]
+type ReplaceKeys<N, K, T> = N extends N
+  ? {
+      [key in keyof N]: key extends K ? T[Extract<keyof T, key>] : N[key]
     }
-    : never
+  : never
 
 import type { Equal, Expect } from '@type-challenges/utils'
 
@@ -92,6 +88,11 @@ type ReplacedNodes = ReplacedNodeA | ReplacedNodeB | ReplacedNodeC
 type NodesNoName = NoNameNodeA | NoNameNodeC | NodeB
 
 type cases = [
-  Expect<Equal<ReplaceKeys<Nodes, 'name' | 'flag', { name: number; flag: string }>, ReplacedNodes>>,
-  Expect<Equal<ReplaceKeys<Nodes, 'name', { aa: number }>, NodesNoName>>,
+  Expect<
+    Equal<
+      ReplaceKeys<Nodes, 'name' | 'flag', { name: number; flag: string }>,
+      ReplacedNodes
+    >
+  >,
+  Expect<Equal<ReplaceKeys<Nodes, 'name', { aa: number }>, NodesNoName>>
 ]

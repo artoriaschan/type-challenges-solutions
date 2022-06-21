@@ -4,14 +4,13 @@
   type case3 = IsUnion<[string|number]>  // false
 */
 
-type IsUnion<T, T2 = T> =
-  [T] extends [never] // wrapped in a tuple
+type IsUnion<T, T2 = T> = [T] extends [never] // wrapped in a tuple
+  ? false
+  : T extends T2 // naked type usage distribute over a union type
+  ? [T2] extends [T] // wrapped in a tuple
     ? false
-    : T extends T2 // naked type usage distribute over a union type
-      ? [T2] extends [T] // wrapped in a tuple
-        ? false
-        : true
-      : never
+    : true
+  : never
 
 import type { Equal, Expect } from '@type-challenges/utils'
 
@@ -28,5 +27,5 @@ type cases = [
   Expect<Equal<IsUnion<string | unknown>, false>>,
   Expect<Equal<IsUnion<string | any>, false>>,
   Expect<Equal<IsUnion<string | 'a'>, false>>,
-  Expect<Equal<IsUnion<never>, false>>,
+  Expect<Equal<IsUnion<never>, false>>
 ]

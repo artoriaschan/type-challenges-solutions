@@ -8,7 +8,7 @@
 // 这里有个有趣的地方
 // type a = never extends never ? true : false; // a is true
 
-// type isNever<T> = T extends never ? true : false 
+// type isNever<T> = T extends never ? true : false
 // type b = isNever<never> // b is never
 
 // Distributive Conditional Types: 当条件类型作用于泛型类型时，当给定一个联合类型时，会将联合类型分开单独计算和进行合并返回
@@ -25,5 +25,5 @@ type cases = [
   Expect<Equal<IsNever<undefined>, false>>,
   Expect<Equal<IsNever<null>, false>>,
   Expect<Equal<IsNever<[]>, false>>,
-  Expect<Equal<IsNever<{}>, false>>,
+  Expect<Equal<IsNever<{}>, false>>
 ]

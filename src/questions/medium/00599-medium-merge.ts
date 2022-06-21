@@ -13,14 +13,12 @@
 
 // 同时遍历key 使用 | 联合
 type Merge<T, U> = {
-  [key in keyof T | keyof U]: 
-    key extends keyof U 
-      ? U[key] 
-      : key extends keyof T 
-        ? T[key] 
-        : never;
+  [key in keyof T | keyof U]: key extends keyof U
+    ? U[key]
+    : key extends keyof T
+    ? T[key]
+    : never
 }
-
 
 import type { Equal, Expect } from '@type-challenges/utils'
 
@@ -34,9 +32,14 @@ type Bar = {
 }
 
 type cases = [
-  Expect<Equal<Merge<Foo, Bar>, {
-    a: number
-    b: number
-    c: boolean
-  }>>,
+  Expect<
+    Equal<
+      Merge<Foo, Bar>,
+      {
+        a: number
+        b: number
+        c: boolean
+      }
+    >
+  >
 ]

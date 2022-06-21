@@ -8,8 +8,7 @@
 */
 
 type RemoveIndexSignature<T> = {
-  [K in keyof T as K extends `${infer _}` ? K : never]:
-  T[K]
+  [K in keyof T as K extends `${infer _}` ? K : never]: T[K]
 }
 
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -38,5 +37,5 @@ type cases = [
   Expect<Equal<RemoveIndexSignature<Foo>, { foo(): void }>>,
   Expect<Equal<RemoveIndexSignature<Bar>, { bar(): void }>>,
   Expect<Equal<RemoveIndexSignature<FooBar>, { foobar(): void }>>,
-  Expect<Equal<RemoveIndexSignature<Baz>, { bar(): void; baz: string }>>,
+  Expect<Equal<RemoveIndexSignature<Baz>, { bar(): void; baz: string }>>
 ]
