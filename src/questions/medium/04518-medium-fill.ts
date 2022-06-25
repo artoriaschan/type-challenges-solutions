@@ -15,8 +15,11 @@ type Fill<
     ? [
         N,
         ...Fill<Rest, N, [...Count, 1]['length'] & number, End, [...Count, 1]>
-      ] // 开始指针向右移位，计数累加
-    : [First, ...Fill<Rest, N, Start, End, [...Count, 1]>] // 不符合条件则直接跳过
+    ] // 开始指针向右移位，计数累加
+    : [
+        First,
+        ...Fill<Rest, N, Start, End, [...Count, 1]>
+    ] // 不符合条件则直接跳过
   : T // 不符合条件直接返回
 
 import type { Equal, Expect } from '@type-challenges/utils'
