@@ -75,24 +75,27 @@
   > View on GitHub: https://tsch.js.org/1290
 */
 
-
 /* _____________ Your Code Here _____________ */
 
 type Store<S, G, A> = {
   id: string
   state: () => S
-  getters: G & ThisType<
-    Readonly<S> & { 
-      [K in keyof G]: G[K] extends () => infer R ? R : never 
-    }
-  >
+  getters: G &
+    ThisType<
+      Readonly<S> & {
+        [K in keyof G]: G[K] extends () => infer R ? R : never
+      }
+    >
   actions: A & ThisType<S & A>
 }
 
-type StoreReturn<S, G, A> = S & { [K in keyof G]: G[K] extends () => infer R ? R : never } & A
+type StoreReturn<S, G, A> = S & {
+  [K in keyof G]: G[K] extends () => infer R ? R : never
+} & A
 
-declare function defineStore<S, G, A>(store: Store<S, G, A>): StoreReturn<S, G, A>
-
+declare function defineStore<S, G, A>(
+  store: Store<S, G, A>
+): StoreReturn<S, G, A>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -101,7 +104,7 @@ const store = defineStore({
   id: '',
   state: () => ({
     num: 0,
-    str: '',
+    str: ''
   }),
   getters: {
     stringifiedNum() {
@@ -112,7 +115,7 @@ const store = defineStore({
     },
     parsedNum() {
       return parseInt(this.stringifiedNum)
-    },
+    }
   },
   actions: {
     init() {
@@ -132,8 +135,8 @@ const store = defineStore({
     },
     setNum(value: number) {
       this.num = value
-    },
-  },
+    }
+  }
 })
 
 // @ts-expect-error
@@ -159,10 +162,8 @@ type _tests = [
   Expect<Equal<typeof store.str, string>>,
   Expect<Equal<typeof store.stringifiedNum, string>>,
   Expect<Equal<typeof store.parsedNum, number>>,
-  Expect<Equal<typeof r, true>>,
+  Expect<Equal<typeof r, true>>
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -170,4 +171,3 @@ type _tests = [
   > View solutions: https://tsch.js.org/1290/solutions
   > More Challenges: https://tsch.js.org
 */
-

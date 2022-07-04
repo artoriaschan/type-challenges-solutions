@@ -36,7 +36,6 @@
   > View on GitHub: https://tsch.js.org/553
 */
 
-
 /* _____________ Your Code Here _____________ */
 declare const Tag: unique symbol
 
@@ -45,7 +44,6 @@ type DeepObjectToUniq<O extends object, Path extends any[] = [O]> = {
     ? DeepObjectToUniq<O[K], [...Path, K]>
     : O[K]
 } & { [Tag]?: Path } // 增加标志位, 保证对象唯一
-
 
 /* _____________ Test Cases _____________ */
 import type { Equal, IsFalse, IsTrue } from '@type-challenges/utils'
@@ -74,10 +72,8 @@ type cases = [
   IsFalse<Equal<UniqFoo['bar'], UniqFoo['baz']>>,
   IsFalse<Equal<UniqBar['baz'], UniqFoo['baz']>>,
   IsTrue<Equal<keyof UniqBar['baz'], keyof UniqFoo['baz']>>,
-  IsTrue<Equal<keyof Foo, keyof UniqFoo & string>>,
+  IsTrue<Equal<keyof Foo, keyof UniqFoo & string>>
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -85,4 +81,3 @@ type cases = [
   > View solutions: https://tsch.js.org/553/solutions
   > More Challenges: https://tsch.js.org
 */
-

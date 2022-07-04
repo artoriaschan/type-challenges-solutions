@@ -11,8 +11,8 @@ type TupleToUnion<T> = T extends (infer A)[] ? A : T
 type MyReturnType<T> = T extends () => infer A
   ? A
   : T extends new (...args: any[]) => infer A
-    ? A
-    : any
+  ? A
+  : any
 
 type Props<P> = {
   [key in keyof P]: MyReturnType<
@@ -21,17 +21,20 @@ type Props<P> = {
 }
 
 type OptionsType<P, D, C, M> = {
-  props: P;
-  data: (this: Props<P>) => D;
-  computed: C;
-  methods: M;
+  props: P
+  data: (this: Props<P>) => D
+  computed: C
+  methods: M
 } & ThisType<
-  Props<P> & D & {
-    [key in keyof C]: C[key] extends () => infer R ? R : any;
-  } & M
+  Props<P> &
+    D & {
+      [key in keyof C]: C[key] extends () => infer R ? R : any
+    } & M
 >
 
-declare function VueBasicProps<P, D, C, M>(options: OptionsType<P, D, C, M>): any
+declare function VueBasicProps<P, D, C, M>(
+  options: OptionsType<P, D, C, M>
+): any
 
 import type { Debug, Equal, Expect, IsAny } from '@type-challenges/utils'
 
@@ -44,7 +47,7 @@ VueBasicProps({
     propC: { type: Boolean },
     propD: { type: ClassA },
     propE: { type: [String, Number] },
-    propF: RegExp,
+    propF: RegExp
   },
   data(this) {
     type PropsType = Debug<typeof this>
@@ -54,7 +57,7 @@ VueBasicProps({
       Expect<Equal<PropsType['propC'], boolean>>,
       Expect<Equal<PropsType['propD'], ClassA>>,
       Expect<Equal<PropsType['propE'], string | number>>,
-      Expect<Equal<PropsType['propF'], RegExp>>,
+      Expect<Equal<PropsType['propF'], RegExp>>
     ]
 
     // @ts-expect-error
@@ -67,13 +70,13 @@ VueBasicProps({
     return {
       firstname: 'Type',
       lastname: 'Challenges',
-      amount: 10,
+      amount: 10
     }
   },
   computed: {
     fullname() {
       return `${this.firstname} ${this.lastname}`
-    },
+    }
   },
   methods: {
     getRandom() {
@@ -88,8 +91,8 @@ VueBasicProps({
       const propE = this.propE
       type cases = [
         Expect<Equal<typeof fullname, string>>,
-        Expect<Equal<typeof propE, string | number>>,
+        Expect<Equal<typeof propE, string | number>>
       ]
-    },
-  },
+    }
+  }
 })

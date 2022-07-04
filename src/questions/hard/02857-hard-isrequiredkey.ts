@@ -18,11 +18,11 @@
   > View on GitHub: https://tsch.js.org/2857
 */
 
-
 /* _____________ Your Code Here _____________ */
 
-type IsRequiredKey<T, K extends keyof T> = T[K] extends Required<T>[K] ? true : false
-
+type IsRequiredKey<T, K extends keyof T> = T[K] extends Required<T>[K]
+  ? true
+  : false
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -30,10 +30,8 @@ import type { Equal, Expect } from '@type-challenges/utils'
 type cases = [
   Expect<Equal<IsRequiredKey<{ a: number; b?: string }, 'a'>, true>>,
   Expect<Equal<IsRequiredKey<{ a: number; b?: string }, 'b'>, false>>,
-  Expect<Equal<IsRequiredKey<{ a: number; b?: string }, 'b' | 'a'>, false>>,
+  Expect<Equal<IsRequiredKey<{ a: number; b?: string }, 'b' | 'a'>, false>>
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -41,4 +39,3 @@ type cases = [
   > View solutions: https://tsch.js.org/2857/solutions
   > More Challenges: https://tsch.js.org
 */
-

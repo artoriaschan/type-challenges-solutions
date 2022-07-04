@@ -58,17 +58,15 @@
   > View on GitHub: https://tsch.js.org/9160
 */
 
-
 /* _____________ Your Code Here _____________ */
 
-type Merge<F, S> = Omit<Omit<F, keyof S> & S, never>;
+type Merge<F, S> = Omit<Omit<F, keyof S> & S, never>
 
 type Assign<T extends Record<string, unknown>, U> = U extends object[]
   ? U extends [infer F, ...infer R]
     ? Assign<Merge<T, F>, R>
     : T
-  : T;
-
+  : T
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -158,13 +156,16 @@ type Case4Answer = {
 }
 
 type cases = [
-  Expect<Equal<Assign<Case1Target, [Case1Origin1, Case1Origin2, Case1Origin3]>, Case1Answer>>,
+  Expect<
+    Equal<
+      Assign<Case1Target, [Case1Origin1, Case1Origin2, Case1Origin3]>,
+      Case1Answer
+    >
+  >,
   Expect<Equal<Assign<Case2Target, [Case2Origin1, Case2Origin2]>, Case2Answer>>,
   Expect<Equal<Assign<Case3Target, [Case3Origin1, Case3Origin2]>, Case3Answer>>,
-  Expect<Equal<Assign<Case4Target, ['', 0]>, Case4Answer>>,
+  Expect<Equal<Assign<Case4Target, ['', 0]>, Case4Answer>>
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -172,4 +173,3 @@ type cases = [
   > View solutions: https://tsch.js.org/9160/solutions
   > More Challenges: https://tsch.js.org
 */
-

@@ -17,24 +17,23 @@
 */
 
 type ControlsMap = {
-  c: "char";
-  s: "string";
-  d: "dec";
-  o: "oct";
-  h: "hex";
-  f: "float";
-  p: "pointer";
-};
+  c: 'char'
+  s: 'string'
+  d: 'dec'
+  o: 'oct'
+  h: 'hex'
+  f: 'float'
+  p: 'pointer'
+}
 
-type ParsePrintFormat<S extends string> =
-  S extends `${string}%${infer A}`
-    ? A extends `${infer F}${infer R}`
-      ? [
-          ...(F extends keyof ControlsMap ? [ControlsMap[F]] : []),
-          ...ParsePrintFormat<R>
-        ]
-      : []
+type ParsePrintFormat<S extends string> = S extends `${string}%${infer A}`
+  ? A extends `${infer F}${infer R}`
+    ? [
+        ...(F extends keyof ControlsMap ? [ControlsMap[F]] : []),
+        ...ParsePrintFormat<R>
+      ]
     : []
+  : []
 
 import type { Equal, Expect } from '@type-challenges/utils'
 
@@ -48,5 +47,5 @@ type cases = [
   Expect<Equal<ParsePrintFormat<'The result is %h.'>, ['hex']>>,
   Expect<Equal<ParsePrintFormat<'The result is %q.'>, []>>,
   Expect<Equal<ParsePrintFormat<'Hello %s: score is %d.'>, ['string', 'dec']>>,
-  Expect<Equal<ParsePrintFormat<'The result is %'>, []>>,
+  Expect<Equal<ParsePrintFormat<'The result is %'>, []>>
 ]

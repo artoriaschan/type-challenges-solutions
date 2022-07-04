@@ -8,19 +8,23 @@
   type Res4 = Unique<[unknown, unknown, any, any, never, never]>; // expected to be [unknown, any, never]
 */
 
-type IndexOf<T, U, Count extends 1[] = []> =
-  T extends [infer First, ...infer Rest]
-    ? Equal<First,U> extends true
-      ? Count['length']
-      : IndexOf<Rest, U, [...Count, 1]>
-    : -1
+type IndexOf<T, U, Count extends 1[] = []> = T extends [
+  infer First,
+  ...infer Rest
+]
+  ? Equal<First, U> extends true
+    ? Count['length']
+    : IndexOf<Rest, U, [...Count, 1]>
+  : -1
 
-type Unique<T, Result extends any[] = []> =
-  T extends [infer First, ...infer Rest]
-    ? IndexOf<Result, First> extends -1 // 通过 IndexOf 判断当前元素是否在结果数组中
-      ? Unique<Rest, [...Result, First]>
-      : Unique<Rest, Result>
-    : Result
+type Unique<T, Result extends any[] = []> = T extends [
+  infer First,
+  ...infer Rest
+]
+  ? IndexOf<Result, First> extends -1 // 通过 IndexOf 判断当前元素是否在结果数组中
+    ? Unique<Rest, [...Result, First]>
+    : Unique<Rest, Result>
+  : Result
 
 import type { Equal, Expect } from '@type-challenges/utils'
 
@@ -28,6 +32,16 @@ type cases = [
   Expect<Equal<Unique<[1, 1, 2, 2, 3, 3]>, [1, 2, 3]>>,
   Expect<Equal<Unique<[1, 2, 3, 4, 4, 5, 6, 7]>, [1, 2, 3, 4, 5, 6, 7]>>,
   Expect<Equal<Unique<[1, 'a', 2, 'b', 2, 'a']>, [1, 'a', 2, 'b']>>,
-  Expect<Equal<Unique<[string, number, 1, 'a', 1, string, 2, 'b', 2, number]>, [string, number, 1, 'a', 2, 'b']>>,
-  Expect<Equal<Unique<[unknown, unknown, any, any, never, never]>, [unknown, any, never]>>,
+  Expect<
+    Equal<
+      Unique<[string, number, 1, 'a', 1, string, 2, 'b', 2, number]>,
+      [string, number, 1, 'a', 2, 'b']
+    >
+  >,
+  Expect<
+    Equal<
+      Unique<[unknown, unknown, any, any, never, never]>,
+      [unknown, any, never]
+    >
+  >
 ]

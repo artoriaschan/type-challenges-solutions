@@ -22,7 +22,6 @@
   > View on GitHub: https://tsch.js.org/7258
 */
 
-
 /* _____________ Your Code Here _____________ */
 // ⭐️⭐️⭐️⭐️⭐️
 type IsNumber<T> = T extends number ? `[${T}]` | `.[${T}]` : never
@@ -32,14 +31,14 @@ type ObjectKeyPaths<
   Flag extends boolean = false,
   K extends keyof T = keyof T
 > = K extends string | number
-  ? (Flag extends true ? `.${K}` | IsNumber<K>: `${K}`) |
-    (
-      T[K] extends Record<string, any>
-        ? `${Flag extends true ? `.${K}` | IsNumber<K> : `${K}`}${ObjectKeyPaths<T[K], true>}`
-        : never
-    )
-  : never;
-
+  ?
+      | (Flag extends true ? `.${K}` | IsNumber<K> : `${K}`)
+      | (T[K] extends Record<string, any>
+          ? `${Flag extends true
+              ? `.${K}` | IsNumber<K>
+              : `${K}`}${ObjectKeyPaths<T[K], true>}`
+          : never)
+  : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect, ExpectExtends } from '@type-challenges/utils'
@@ -52,22 +51,22 @@ const ref = {
     books: ['book1', 'book2'],
     pets: [
       {
-        type: 'cat',
-      },
-    ],
-  },
+        type: 'cat'
+      }
+    ]
+  }
 }
 
 type cases = [
   Expect<Equal<ObjectKeyPaths<{ name: string; age: number }>, 'name' | 'age'>>,
   Expect<
-  Equal<
-  ObjectKeyPaths<{
-    refCount: number
-    person: { name: string; age: number }
-  }>,
-  'refCount' | 'person' | 'person.name' | 'person.age'
-  >
+    Equal<
+      ObjectKeyPaths<{
+        refCount: number
+        person: { name: string; age: number }
+      }>,
+      'refCount' | 'person' | 'person.name' | 'person.age'
+    >
   >,
   Expect<ExpectExtends<ObjectKeyPaths<typeof ref>, 'count'>>,
   Expect<ExpectExtends<ObjectKeyPaths<typeof ref>, 'person'>>,
@@ -81,13 +80,22 @@ type cases = [
   Expect<ExpectExtends<ObjectKeyPaths<typeof ref>, 'person.books.[0]'>>,
   Expect<ExpectExtends<ObjectKeyPaths<typeof ref>, 'person.pets.0.type'>>,
   Expect<Equal<ExpectExtends<ObjectKeyPaths<typeof ref>, 'notExist'>, false>>,
-  Expect<Equal<ExpectExtends<ObjectKeyPaths<typeof ref>, 'person.notExist'>, false>>,
-  Expect<Equal<ExpectExtends<ObjectKeyPaths<typeof ref>, 'person.name.'>, false>>,
-  Expect<Equal<ExpectExtends<ObjectKeyPaths<typeof ref>, '.person.name'>, false>>,
-  Expect<Equal<ExpectExtends<ObjectKeyPaths<typeof ref>, 'person.pets.[0]type'>, false>>,
+  Expect<
+    Equal<ExpectExtends<ObjectKeyPaths<typeof ref>, 'person.notExist'>, false>
+  >,
+  Expect<
+    Equal<ExpectExtends<ObjectKeyPaths<typeof ref>, 'person.name.'>, false>
+  >,
+  Expect<
+    Equal<ExpectExtends<ObjectKeyPaths<typeof ref>, '.person.name'>, false>
+  >,
+  Expect<
+    Equal<
+      ExpectExtends<ObjectKeyPaths<typeof ref>, 'person.pets.[0]type'>,
+      false
+    >
+  >
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -95,4 +103,3 @@ type cases = [
   > View solutions: https://tsch.js.org/7258/solutions
   > More Challenges: https://tsch.js.org
 */
-

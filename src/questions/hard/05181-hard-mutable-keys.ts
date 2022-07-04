@@ -17,16 +17,18 @@
   > View on GitHub: https://tsch.js.org/5181
 */
 
-
 /* _____________ Your Code Here _____________ */
 
-type IsEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
+type IsEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B
+  ? 1
+  : 2
+  ? true
+  : false
 type MutableKeys<T, K = keyof T> = K extends keyof T
   ? IsEqual<Pick<T, K>, Readonly<Pick<T, K>>> extends true
     ? never
     : K
   : never
-
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -34,11 +36,14 @@ import type { Equal, Expect } from '@type-challenges/utils'
 type cases = [
   Expect<Equal<MutableKeys<{ a: number; readonly b: string }>, 'a'>>,
   Expect<Equal<MutableKeys<{ a: undefined; readonly b: undefined }>, 'a'>>,
-  Expect<Equal<MutableKeys<{ a: undefined; readonly b?: undefined; c: string; d: null }>, 'a' | 'c' | 'd'>>,
-  Expect<Equal<MutableKeys<{}>, never>>,
+  Expect<
+    Equal<
+      MutableKeys<{ a: undefined; readonly b?: undefined; c: string; d: null }>,
+      'a' | 'c' | 'd'
+    >
+  >,
+  Expect<Equal<MutableKeys<{}>, never>>
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -46,4 +51,3 @@ type cases = [
   > View solutions: https://tsch.js.org/5181/solutions
   > More Challenges: https://tsch.js.org
 */
-

@@ -25,54 +25,52 @@
   > View on GitHub: https://tsch.js.org/1383
 */
 
-
 /* _____________ Your Code Here _____________ */
 // 处理数组
-type CamelizeArray<T> = 
-  T extends [infer First, ...infer Rest] ? (
-    [Camelize<First>, ...CamelizeArray<Rest>]
-  ) : T
+type CamelizeArray<T> = T extends [infer First, ...infer Rest]
+  ? [Camelize<First>, ...CamelizeArray<Rest>]
+  : T
 
 // 处理key
-type CamelCase<T> =
-  T extends `${infer First}_${infer Rest}` ? (
-    `${First}${CamelCase<`${Capitalize<Rest>}`>}`
-  ) : T
+type CamelCase<T> = T extends `${infer First}_${infer Rest}`
+  ? `${First}${CamelCase<`${Capitalize<Rest>}`>}`
+  : T
 
 type Camelize<T> = T extends object
   ? {
-    [key in keyof T as CamelCase<key>]: T[key] extends unknown[] ? CamelizeArray<T[key]> : Camelize<T[key]>
-  }
+      [key in keyof T as CamelCase<key>]: T[key] extends unknown[]
+        ? CamelizeArray<T[key]>
+        : Camelize<T[key]>
+    }
   : T
-
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
 type cases = [
-  Expect<Equal<
-    Camelize<{
-      some_prop: string
-      prop: { another_prop: string }
-      array: [
-        { snake_case: string },
-        { another_element: { yet_another_prop: string } },
-        { yet_another_element: string },
-      ]
-    }>,
-    {
-      someProp: string
-      prop: { anotherProp: string }
-      array: [
-        { snakeCase: string },
-        { anotherElement: { yetAnotherProp: string } },
-        { yetAnotherElement: string },
-      ]
-    }
-  >>,
+  Expect<
+    Equal<
+      Camelize<{
+        some_prop: string
+        prop: { another_prop: string }
+        array: [
+          { snake_case: string },
+          { another_element: { yet_another_prop: string } },
+          { yet_another_element: string }
+        ]
+      }>,
+      {
+        someProp: string
+        prop: { anotherProp: string }
+        array: [
+          { snakeCase: string },
+          { anotherElement: { yetAnotherProp: string } },
+          { yetAnotherElement: string }
+        ]
+      }
+    >
+  >
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -80,4 +78,3 @@ type cases = [
   > View solutions: https://tsch.js.org/1383/solutions
   > More Challenges: https://tsch.js.org
 */
-

@@ -16,18 +16,15 @@
   > View on GitHub: https://tsch.js.org/2822
 */
 
-
 /* _____________ Your Code Here _____________ */
 
-type Split<S extends string, SEP extends string> =
-  string extends S  // 判断传的是否是 string
-    ? string[]
-    : S extends `${infer First}${SEP}${infer Rest}`
-      ? [First, ...Split<Rest, SEP>]
-      : SEP extends ""
-        ? []
-        : [S]
-
+type Split<S extends string, SEP extends string> = string extends S // 判断传的是否是 string
+  ? string[]
+  : S extends `${infer First}${SEP}${infer Rest}`
+  ? [First, ...Split<Rest, SEP>]
+  : SEP extends ''
+  ? []
+  : [S]
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -35,13 +32,33 @@ import type { Equal, Expect } from '@type-challenges/utils'
 type cases = [
   Expect<Equal<Split<'Hi! How are you?', 'z'>, ['Hi! How are you?']>>,
   Expect<Equal<Split<'Hi! How are you?', ' '>, ['Hi!', 'How', 'are', 'you?']>>,
-  Expect<Equal<Split<'Hi! How are you?', ''>, ['H', 'i', '!', ' ', 'H', 'o', 'w', ' ', 'a', 'r', 'e', ' ', 'y', 'o', 'u', '?']>>,
+  Expect<
+    Equal<
+      Split<'Hi! How are you?', ''>,
+      [
+        'H',
+        'i',
+        '!',
+        ' ',
+        'H',
+        'o',
+        'w',
+        ' ',
+        'a',
+        'r',
+        'e',
+        ' ',
+        'y',
+        'o',
+        'u',
+        '?'
+      ]
+    >
+  >,
   Expect<Equal<Split<'', ''>, []>>,
   Expect<Equal<Split<'', 'z'>, ['']>>,
-  Expect<Equal<Split<string, 'whatever'>, string[]>>,
+  Expect<Equal<Split<string, 'whatever'>, string[]>>
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -49,4 +66,3 @@ type cases = [
   > View solutions: https://tsch.js.org/2822/solutions
   > More Challenges: https://tsch.js.org
 */
-

@@ -24,7 +24,6 @@
   > View on GitHub: https://tsch.js.org/9155
 */
 
-
 /* _____________ Your Code Here _____________ */
 
 type _0_8 = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
@@ -39,7 +38,6 @@ type M28 = `02${D28}`
 
 type ValidDate<T extends string> = T extends M28 | M30 | M31 ? true : false
 
-
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
@@ -53,10 +51,8 @@ type cases = [
   Expect<Equal<ValidDate<'1301'>, false>>,
   Expect<Equal<ValidDate<'0123'>, true>>,
   Expect<Equal<ValidDate<'01234'>, false>>,
-  Expect<Equal<ValidDate<''>, false>>,
+  Expect<Equal<ValidDate<''>, false>>
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -64,4 +60,3 @@ type cases = [
   > View solutions: https://tsch.js.org/9155/solutions
   > More Challenges: https://tsch.js.org
 */
-

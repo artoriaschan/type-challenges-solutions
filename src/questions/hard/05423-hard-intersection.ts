@@ -19,18 +19,11 @@
   > View on GitHub: https://tsch.js.org/5423
 */
 
-
 /* _____________ Your Code Here _____________ */
 
-type Intersection<T> =
-  T extends [infer First, ...infer Rest]
-    ? (
-        First extends unknown[] 
-          ? First[number] 
-          : First
-      ) & Intersection<Rest>
-    : unknown;
-
+type Intersection<T> = T extends [infer First, ...infer Rest]
+  ? (First extends unknown[] ? First[number] : First) & Intersection<Rest>
+  : unknown
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -41,10 +34,8 @@ type cases = [
   Expect<Equal<Intersection<[[1, 2], [3, 4], [5, 6]]>, never>>,
   Expect<Equal<Intersection<[[1, 2, 3], [2, 3, 4], 3]>, 3>>,
   Expect<Equal<Intersection<[[1, 2, 3], 2 | 3 | 4, 2 | 3]>, 2 | 3>>,
-  Expect<Equal<Intersection<[[1, 2, 3], 2, 3]>, never>>,
+  Expect<Equal<Intersection<[[1, 2, 3], 2, 3]>, never>>
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -52,4 +43,3 @@ type cases = [
   > View solutions: https://tsch.js.org/5423/solutions
   > More Challenges: https://tsch.js.org
 */
-

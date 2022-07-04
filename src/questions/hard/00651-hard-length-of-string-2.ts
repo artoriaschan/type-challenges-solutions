@@ -16,14 +16,14 @@
   > View on GitHub: https://tsch.js.org/651
 */
 
-
 /* _____________ Your Code Here _____________ */
 
-type LengthOfString<S extends string, Count extends 1[] = []> = 
-  S extends `${infer First}${infer Rest}`
-    ? LengthOfString<Rest, [...Count, 1]>
-    : Count['length']
-
+type LengthOfString<
+  S extends string,
+  Count extends 1[] = []
+> = S extends `${infer First}${infer Rest}`
+  ? LengthOfString<Rest, [...Count, 1]>
+  : Count['length']
 
 /* _____________ Test Cases _____________ */
 import type { Equal, IsTrue } from '@type-challenges/utils'
@@ -53,10 +53,13 @@ type cases = [
   IsTrue<Equal<LengthOfString<'123456789012345678901'>, 21>>,
   IsTrue<Equal<LengthOfString<'1234567890123456789012'>, 22>>,
   IsTrue<Equal<LengthOfString<'12345678901234567890123'>, 23>>,
-  IsTrue<Equal<LengthOfString<'aaaaaaaaaaaaggggggggggggggggggggkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'>, 272>>,
+  IsTrue<
+    Equal<
+      LengthOfString<'aaaaaaaaaaaaggggggggggggggggggggkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'>,
+      272
+    >
+  >
 ]
-
-
 
 /* _____________ Further Steps _____________ */
 /*
@@ -64,4 +67,3 @@ type cases = [
   > View solutions: https://tsch.js.org/651/solutions
   > More Challenges: https://tsch.js.org
 */
-

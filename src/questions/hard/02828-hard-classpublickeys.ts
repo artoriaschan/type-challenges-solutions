@@ -25,11 +25,9 @@
   > View on GitHub: https://tsch.js.org/2828
 */
 
-
 /* _____________ Your Code Here _____________ */
 
 type ClassPublicKeys<C> = keyof C
-
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -49,11 +47,7 @@ class A {
   }
 }
 
-type cases = [
-  Expect<Equal<ClassPublicKeys<A>, 'str' | 'getNum'>>,
-]
-
-
+type cases = [Expect<Equal<ClassPublicKeys<A>, 'str' | 'getNum'>>]
 
 /* _____________ Further Steps _____________ */
 /*
@@ -61,4 +55,3 @@ type cases = [
   > View solutions: https://tsch.js.org/2828/solutions
   > More Challenges: https://tsch.js.org
 */
-
